@@ -88,7 +88,7 @@ export function getVrvWorker() {
 function downloadVerovioToolkit(use_worker) {
   console.log('Downloading vrv toolkit from humdrum-notation-plugin-worker.js');
   vrvWorker = new vrvInterface(use_worker, callbackAfterInitialized);
-  // window.vrvWorker = vrvWorker;
+  window.vrvWorker = vrvWorker;
 }
 
 function callbackAfterInitialized() {
@@ -828,6 +828,11 @@ vrvInterface.prototype.renderToMidi = function () {
   var value = this.execute('renderToMidi', arguments);
   return value;
 };
+
+vrvInterface.prototype.convertHumdrumToMIDI = function () {
+  var value = this.execute('convertHumdrumToMIDI', arguments);
+  return value;
+}
 
 //////////////////////////////
 //

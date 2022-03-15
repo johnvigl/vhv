@@ -16,7 +16,7 @@ export default class AceBinding {
     this.doc = doc;
     this.ace = ace;
     this.ace.session.getUndoManager().reset();
-    this.aceCursors = new AceCursors(this.ace);
+    // this.aceCursors = new AceCursors(this.ace);
 
     this.yUndoManager = yUndoManager;
     if (yUndoManager) {
@@ -44,24 +44,24 @@ export default class AceBinding {
     }
 
     this.awareness = awareness;
-    this._awarenessChange = ({ added, removed, updated }) => {
-      this.aceCursors.marker.cursors = [];
-      const states = /** @type {Awareness} */ (this.awareness).getStates();
-      added.forEach((id) => {
-        // console.log('added: ' + id)
-        this.aceCursors.updateCursors(states.get(id), id);
-      });
-      updated.forEach((id) => {
-        // console.log('updated: ' + id)
-        this.aceCursors.updateCursors(states.get(id), id);
-      });
-      removed.forEach((id) => {
-        // console.log('removed: ' + id)
-        this.aceCursors.updateCursors(states.get(id), id);
-      });
+    // this._awarenessChange = ({ added, removed, updated }) => {
+    //   this.aceCursors.marker.cursors = [];
+    //   const states = /** @type {Awareness} */ (this.awareness).getStates();
+    //   added.forEach((id) => {
+    //     // console.log('added: ' + id)
+    //     this.aceCursors.updateCursors(states.get(id), id);
+    //   });
+    //   updated.forEach((id) => {
+    //     // console.log('updated: ' + id)
+    //     this.aceCursors.updateCursors(states.get(id), id);
+    //   });
+    //   removed.forEach((id) => {
+    //     // console.log('removed: ' + id)
+    //     this.aceCursors.updateCursors(states.get(id), id);
+    //   });
 
-      this.aceCursors.marker.redraw();
-    };
+    //   this.aceCursors.marker.redraw();
+    // };
 
     this._typeObserver = (event) => {
       const aceDocument = this.ace.getSession().getDocument();
@@ -189,9 +189,9 @@ export default class AceBinding {
       .getSession()
       .selection.on('changeCursor', () => this._cursorObserver());
 
-    if (this.awareness) {
-      this.awareness.on('change', this._awarenessChange);
-    }
+    // if (this.awareness) {
+    //   this.awareness.on('change', this._awarenessChange);
+    // }
   }
   _onStackItemPopped(event) {
     // console.log('stackItem added to UndoManager', event);
@@ -206,7 +206,7 @@ export default class AceBinding {
     this.type.unobserve(this._typeObserver);
     this.ace.off('change', this._aceObserver);
     if (this.awareness) {
-      this.awareness.off('change', this._awarenessChange);
+      // this.awareness.off('change', this._awarenessChange);
     }
     if (this.yUndoManager) {
       this.yUndoManager.off('stack-item-added', this._onStackItemAdded);

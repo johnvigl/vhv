@@ -1,11 +1,40 @@
 import 'html-midi-player';
 import { getVrvWorker } from './humdrum-notation-plugin-worker.js';
+import { global_cursor } from './vhv-scripts/global-variables.js';
 
 const player = document.getElementById('midi-player');
 const loadMidiBtn = document.getElementById('load-midi');
 const saveMidiBtn = document.getElementById('save-midi');
 
 let vrvWorker = getVrvWorker();
+
+const proxy = new Proxy(player, {
+  set: function (target, key, value) {
+    target[key] = value;
+    if (key === 'currentTime') {
+      console.log(key, value);
+      vrvWorker.getElementsAtTime(player.currentTime).then(function (elements) {
+        console.log(elements)
+      });
+    }
+    return true;
+  }
+})
+
+player.playButton.addEventListener('click', () => {
+  console.log('Player clicked');
+  console.log('Time', {...player});
+  
+  if (global_cursor.CursorNote && global_cursor.CursorNote.id) {
+    let id = global_cursor.CursorNote.id;
+    vrvWorker.getTimeForElement(id).then(function (time) {
+      console.log('Time of cursor element', time);
+      proxy.currentTime = time / 1000;
+      // player.currentTime = time / 1000;
+    });
+
+  }
+})
 
 // Convert Humdrum to MIDI and load MIDI to player
 loadMidiBtn.addEventListener('click', async () => {

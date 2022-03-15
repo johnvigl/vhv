@@ -256,6 +256,11 @@ function verovioCalls() {
 		return time;
 	};
 
+	this.convertHumdrumToMIDI = function (humdata) {
+		var midi = this.vrvToolkit.convertHumdrumToMIDI(humdata);
+		return midi;
+	}
+
 
 	//////////////////////////////
 	//

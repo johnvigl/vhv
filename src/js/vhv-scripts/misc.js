@@ -1750,11 +1750,6 @@ export function clearContent() {
 // playCurrentMidi -- If a note is selected start playing from that note;
 //     otherwise, start from the start of the music.
 //
-// document.querySelector('#play-button').addEventListener('click', () => {
-//   console.log('Calling playCurrentMidi')
-
-//   playCurrentMidi();
-// })
 
 import { midiStop, midiUpdate, play_midi } from '../midifunctions.js';
 export function playCurrentMidi() {
