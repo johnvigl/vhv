@@ -94,22 +94,6 @@ if (localStorage.FONT) {
 
 window.addEventListener('load', () => {
   let navElem = document.querySelector('#topnav');
-
-  if (navElem) {
-    let options = {
-      root: null,
-      rootMargin: '0px',
-      threshold: 0.0
-    };
-  
-    let cb = () => {
-      console.log('IObs ran');
-      navElem.scrollIntoView();
-    }
-    let observer = new IntersectionObserver(cb, options);
-    // observer.observe(navElem);
-  }
-
   document.addEventListener('paste', () => {
     console.log('paste')
     if (navElem) {
