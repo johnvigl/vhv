@@ -25,7 +25,7 @@ let oldStartTime = -1;
 player.addEventListener('note', async e => {
   if (e.detail.note.startTime > oldStartTime) {
     // console.log(JSON.stringify(e.detail.note, null, 2));
-    await check(e.detail.note.startTime * 1000);
+    // await check(e.detail.note.startTime * 1000);
     oldStartTime = e.detail.note.startTime;
   }
 })
@@ -37,7 +37,6 @@ player.addEventListener('stop', e => {
 
 window.player = player;
 
-let ids = [];
 async function check(time) {
   let elements = await vrvWorker.getElementsAtTime(time);
   // console.log('elements', elements)

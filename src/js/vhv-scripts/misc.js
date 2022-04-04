@@ -21,7 +21,7 @@ import { verovioCallback } from './listeners.js';
 import { convertDataToCsv, convertDataToTsv } from './utility.js';
 import { loadIndexFile } from './loading.js';
 import { getVrvWorker } from '../humdrum-notation-plugin-worker.js';
-import { InterfaceSingleNumber } from './editor.js';
+import { getEditorContents, InterfaceSingleNumber } from './editor.js';
 
 let vrvWorker = getVrvWorker();
 if (!vrvWorker) {
@@ -1623,6 +1623,18 @@ export function humdrumDataIntoView(event) {
       target = target.parentNode;
       continue;
     }
+
+    
+    if (target.id.match(/^harm-L(\d+)F(\d+)/)) {
+      let line = parseInt(matches[1], 10);
+      let field = parseInt(matches[2], 10);
+
+      if (Number.isInteger(line) && Number.isInteger(field)) {
+        let inputChord = getEditorContents(line, field);
+        document.getElementById('chord-editor').value = inputChord;
+      }
+    }
+
 
     if (target.id.match(/^note-.*/)) {
       getVrvWorker().getTimeForElement(target.id).then(timeMS => {
