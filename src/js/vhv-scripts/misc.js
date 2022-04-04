@@ -1624,6 +1624,12 @@ export function humdrumDataIntoView(event) {
       continue;
     }
 
+    if (target.id.match(/^note-.*/)) {
+      getVrvWorker().getTimeForElement(target.id).then(timeMS => {
+        setMIDIPlayerCurrentTime(timeMS);
+      });
+    }
+
     global_cursor.HIGHLIGHTQUERY = target.id;
     highlightIdInEditor(target.id, 'humdrumDataIntoView');
     break;
@@ -1804,6 +1810,7 @@ import { layoutService } from '../state/layoutStateMachine.js';
 import { removeByDocumentId } from '../api/comments.js';
 import { getURLParams } from '../api/util.js';
 import { yProvider } from '../yjs-setup.js';
+import { setMIDIPlayerCurrentTime } from '../html-midi.js';
 
 export function updateEditorMode() {
   if (!editor) {
