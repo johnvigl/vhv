@@ -1,6 +1,6 @@
 import { html } from 'lit-html';
-import { setState, state } from '../state/comments.js';
-import { yProvider } from '../yjs-setup.js';
+// import { setState, state } from '../state/comments.js';
+import { comments, yProvider } from '../yjs-setup.js';
 import * as commentService from '../api/comments.js';
 import { getURLParams } from '../api/util.js';
 import { multiSelectCoords } from '../collaboration/templates';
@@ -26,26 +26,28 @@ export const handleCommentPost = async (event) => {
         "multiSelectElements": notes.join(',')
       },
       onSuccess: (createdComment) => {
-        console.log('Added comment', createdComment);
         createdComment.highlight = Object.assign({}, coords);
+        console.log('Added comment', createdComment);
 
-        setState({
-          comments: state.comments
-            .map((c) => {
-              return c.highlight == null && typeof c?.multiSelectElements == 'string'
-                ? {
-                  ...c,
-                  highlight: Object.assign(
-                    {},
-                    multiSelectCoords(c.multiSelectElements.split(','))
-                  ),
-                }
-                : c;
-            })
-            .concat(createdComment),
-        });
+        // setState({
+        //   comments: state.comments
+        //     .map((c) => {
+        //       return c.highlight == null && typeof c?.multiSelectElements == 'string'
+        //         ? {
+        //           ...c,
+        //           highlight: Object.assign(
+        //             {},
+        //             multiSelectCoords(c.multiSelectElements.split(','))
+        //           ),
+        //         }
+        //         : c;
+        //     })
+        //     .concat(createdComment),
+        // });
 
-        console.log('Comments after calculating coords', state.comments);
+        comments.push([createdComment]);
+
+        // console.log('Comments after calculating coords', state.comments);
       }
     });
   }

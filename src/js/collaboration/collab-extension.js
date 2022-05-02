@@ -1,4 +1,4 @@
-import { yProvider } from '../yjs-setup.js';
+import { comments, yProvider } from '../yjs-setup.js';
 import { RubberBandSelection } from './RubberBandSelection';
 import { html, render } from 'lit-html';
 import { collabTemplate, uiCoords } from './templates.js';
@@ -12,7 +12,7 @@ import {
   highlightLayerTemplate,
   highlightTemplate,
 } from '../templates/highlights.js';
-import { setState, state } from '../state/comments.js';
+// import { setState, state } from '../state/comments.js';
 import { layoutService } from '../state/layoutStateMachine.js';
 
 let DEBUG = false;
@@ -187,46 +187,54 @@ export function updateHandler(clients = defaultClients()) {
       .toStrings()
       .some((name) => name.toLowerCase().includes('comment'));
 
-    let highlights = html`${commentsVisible ? 
-      html`${state.comments
-            ?.filter((c) => c?.highlight != null)
-            .map((c) => highlightTemplate(c.id, c.highlight))}`
-      : null
-    }`
+    // let highlights = html`${commentsVisible ? 
+    //   html`${comments.toArray()
+    //         ?.filter((c) => c?.highlight != null)
+    //         .map((c) => highlightTemplate(c.id, c.highlight))}`
+    //   : null
+    // }`
 
+    // render(
+    //   html`
+    //     ${collabLayer(multiSelects, singleSelects, userAwareness)}
+    //     ${renderHighlightLayer(highlights)}
+    //   `,
+    //   collabContainer
+    // );
     render(
       html`
         ${collabLayer(multiSelects, singleSelects, userAwareness)}
-        ${renderHighlightLayer(highlights)}
       `,
       collabContainer
     );
 
     // Display connection status (online/offline) for the users sharing the current document
     let onlineElem = document.querySelector('#online-users');
-    if (onlineElem) {
-      let connectedIds = [...yProvider.awareness.getStates().values()].map(
-        (s) => s.user.id
-      );
-      let copy = [...state.users];
-      setState({
-        users: copy
-          .map((u) => ({ ...u, online: connectedIds.includes(u.id) }))
-          .sort((a, b) => b.online - a.online),
-      });
-      render(html`${userListTemplate(state.users)}`, onlineElem);
-      // Initialize bootstrap tooltips
-      $('[data-toggle="tooltip"]').tooltip();
-    } else {
-      console.log(
-        'Element div#online-users is not found. Cannot display online user info.'
-      );
-    }
+    // if (onlineElem) {
+    //   let connectedIds = [...yProvider.awareness.getStates().values()].map(
+    //     (s) => s.user.id
+    //   );
+    //   let copy = [...state.users];
+    //   setState({
+    //     users: copy
+    //       .map((u) => ({ ...u, online: connectedIds.includes(u.id) }))
+    //       .sort((a, b) => b.online - a.online),
+    //   });
+    //   render(html`${userListTemplate(state.users)}`, onlineElem);
+    //   // Initialize bootstrap tooltips
+    //   $('[data-toggle="tooltip"]').tooltip();
+    // } else {
+    //   console.log(
+    //     'Element div#online-users is not found. Cannot display online user info.'
+    //   );
+    // }
   };
 
-  clients?.added?.forEach(f);
-  clients?.updated?.forEach(f);
-  clients?.removed?.forEach(f);
+  f();
+
+  // clients?.added?.forEach(f);
+  // clients?.updated?.forEach(f);
+  // clients?.removed?.forEach(f);
 }
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -272,14 +280,36 @@ function collabLayer(...children) {
   return collabTemplate(uiCoords.svgHeight, ...children);
 }
 
-export function renderHighlightLayer(...children) {
+// export function renderHighlightLayer(...children) {
+//   let output = document.querySelector('#output');
+//   let svg = document.querySelector('#output > svg');
+
+//   let collab = output.querySelector('#collab-container');
+//   let svgHeight = svg?.height.baseVal.value ?? window.innerHeight;
+
+//   return highlightLayerTemplate(svgHeight, ...children);
+// }
+
+export function renderHighlightLayer(children) {
   let output = document.querySelector('#output');
   let svg = document.querySelector('#output > svg');
 
-  let collab = output.querySelector('#collab-container');
+  // let collab = output.querySelector('#collab-container');
   let svgHeight = svg?.height.baseVal.value ?? window.innerHeight;
 
-  return highlightLayerTemplate(svgHeight, ...children);
+  let commentsVisible = layoutService.state
+      .toStrings()
+      .some((name) => name.toLowerCase().includes('comment'));
+  let highlights = html`${commentsVisible ? 
+      html`${children.map((c) => highlightTemplate(c.id, c.highlight))}`
+      : null
+    }`
+
+  let collabContainer = document.querySelector('#output #collab');
+
+  let template = highlightLayerTemplate(svgHeight, highlights);
+  console.log(template, children)
+  render(html`${template}`, collabContainer);
 }
 
 function addListenersToOutput(outputTarget) {

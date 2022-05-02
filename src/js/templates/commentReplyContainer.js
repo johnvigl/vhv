@@ -1,6 +1,6 @@
 import { html } from 'lit-html';
-import { setState, state } from '../state/comments.js';
-import { yProvider } from '../yjs-setup.js';
+// import { setState, state } from '../state/comments.js';
+import { comments, yProvider } from '../yjs-setup.js';
 import * as commentService from '../api/comments.js';
 import personImgUrl from '../../../images/person.svg';
 import { getURLParams } from '../api/util.js';
@@ -32,11 +32,14 @@ export let commentReplyContainerTemplate = (parent, parentElemWidth) => {
       onSuccess: (createdComment) => {
         console.log('Added comment reply', createdComment);
 
-        setState({
-          comments: state.comments.concat(createdComment),
-        });
+        // setState({
+        //   comments: state.comments.concat(createdComment),
+        // });
 
-        console.log('Comments after adding comment reply', state.comments);
+        // console.log('Comments after adding comment reply', state.comments);
+
+        comments.push([createdComment]);
+
         $(`#${collapseId}`).collapse('hide');
         event.target.reset();
       }

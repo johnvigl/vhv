@@ -7,7 +7,7 @@ import { yProvider } from '../yjs-setup.js';
 import { commentFormTemplate } from './commentForm.js';
 import * as commentService from '../api/comments.js';
 import { cache } from 'lit-html/directives/cache.js';
-import { setState, state } from '../state/comments.js';
+// import { setState, state } from '../state/comments.js';
 import { getAceEditor } from '../vhv-scripts/setup.js';
 
 let contextMenu = (clientId, elemRefId, targetX, targetY, handleClick) =>
@@ -174,24 +174,24 @@ export const handleSingleComment = (notes, coords) => async (event) => {
         createdComment.highlight = Object.assign({}, coords);
         console.log('Added comment', createdComment);
 
-        setState({
-          comments: state.comments
-            .map((c) => {
-              return c.highlight == null &&
-                typeof c?.multiSelectElements == 'string'
-                ? {
-                    ...c,
-                    highlight: Object.assign(
-                      {},
-                      multiSelectCoords(c.multiSelectElements.split(','))
-                    ),
-                  }
-                : c;
-            })
-            .concat(createdComment),
-        });
+        // setState({
+        //   comments: state.comments
+        //     .map((c) => {
+        //       return c.highlight == null &&
+        //         typeof c?.multiSelectElements == 'string'
+        //         ? {
+        //             ...c,
+        //             highlight: Object.assign(
+        //               {},
+        //               multiSelectCoords(c.multiSelectElements.split(','))
+        //             ),
+        //           }
+        //         : c;
+        //     })
+        //     .concat(createdComment),
+        // });
 
-        console.log('Comments after calculating coords', state.comments);
+        // console.log('Comments after calculating coords', state.comments);
       },
       onError: console.log
     });

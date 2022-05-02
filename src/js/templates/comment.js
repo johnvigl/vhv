@@ -1,6 +1,6 @@
 import { html } from 'lit-html';
-import { setState, state } from '../state/comments.js';
-import { yProvider } from '../yjs-setup.js';
+// import { setState, state } from '../state/comments.js';
+import { comments, yProvider } from '../yjs-setup.js';
 import { updateHandler } from '../collaboration/collab-extension.js';
 import * as commentService from '../api/comments.js';
 import { getURLParams } from '../api/util.js';
@@ -34,10 +34,15 @@ export let commentTemplate = (commentId, username, content, createdAt, imgUrl, p
       data: { userId: user.id, documentId, clientId: yProvider.awareness.clientID },
       onSuccess: () => {
         console.log('Deleted comment with id: ', commentId);
-        setState({
-          comments: state.comments.filter(c => c.id != commentId)
-        });
-        updateHandler();
+        // setState({
+        //   comments: state.comments.filter(c => c.id != commentId)
+        // });
+
+        let commentToDelete = comments.toArray().findIndex(c => c.id === commentId);
+        if (commentToDelete >= 0) {
+          comments.delete(commentToDelete);
+        }
+        // updateHandler();
       }
     });
   };

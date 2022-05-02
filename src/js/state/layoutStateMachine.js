@@ -2,8 +2,8 @@ import { assign, createMachine, interpret } from 'xstate';
 import { updateHandler } from '../collaboration/collab-extension';
 import { renderComments, uiCoords } from '../collaboration/templates';
 import { displayNotation } from '../vhv-scripts/misc';
-import { yProvider } from '../yjs-setup';
-import { state as commentState } from './comments';
+import { comments, yProvider } from '../yjs-setup';
+// import { state as commentState } from './comments';
 
 let inputElem = document.querySelector('#input');
 let outputElem = document.querySelector('#output');
@@ -100,7 +100,7 @@ export const layoutMachine = createMachine({
             }),
             ({ inputCol, outputCol, commentsCol }) => {
               resize(inputCol, outputCol, commentsCol)();
-              renderComments(commentState.comments)
+              renderComments(comments)
             }
           ],
         },
@@ -114,7 +114,7 @@ export const layoutMachine = createMachine({
             }),
             ({ inputCol, outputCol, commentsCol }) => {
               resize(inputCol, outputCol, commentsCol)();
-              renderComments(commentState.comments)
+              renderComments(comments)
             }
           ],
         }
@@ -132,7 +132,7 @@ export const layoutMachine = createMachine({
             }),
             ({ inputCol, outputCol, commentsCol }) => {
               resize(inputCol, outputCol, commentsCol)();
-              renderComments(commentState.comments)
+              renderComments(comments)
             }
           ],
         },
@@ -158,7 +158,7 @@ export const layoutMachine = createMachine({
             }),
             ({ inputCol, outputCol, commentsCol }) => {
               resize(inputCol, outputCol, commentsCol)();
-              renderComments(commentState.comments)
+              renderComments(comments)
             },
           ],
         }
@@ -176,7 +176,7 @@ export const layoutMachine = createMachine({
             }),
             ({ inputCol, outputCol, commentsCol }) => {
               resize(inputCol, outputCol, commentsCol)();
-              renderComments(commentState.comments)
+              renderComments(comments)
             },
           ],
         },
