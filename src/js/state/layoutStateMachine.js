@@ -44,19 +44,20 @@ const resize = (inputCol, outputCol, commentsCol) => {
   };
 };
 
-// const resizeAndRerender = (inputCol, outputCol, commentsCol) => {
-//   return () => {
-//     resize(inputCol, outputCol, commentsCol)();
-//     displayNotation();
-//   };
-// };
+const NONE = 0;
+const SMALL = 2;
+const SMALL_XL = 4;
+const MID = 6;
+const MID_XL = 8;
+const LARGE = 10;
+const LARGE_XL = 12;
 
 export const layoutMachine = createMachine({
   initial: 'notationVisible',
   context: {
-    inputCol: 0,
-    outputCol: 0,
-    commentsCol: 0,
+    inputCol: NONE,
+    outputCol: LARGE_XL,
+    commentsCol: NONE,
   },
   states: {
     idle: {
@@ -66,9 +67,9 @@ export const layoutMachine = createMachine({
           target: 'notationVisible',
           actions: [
             assign({
-              inputCol: 0,
-              outputCol: 12,
-              commentsCol: 0,
+              inputCol: NONE,
+              outputCol: LARGE_XL,
+              commentsCol: NONE,
             }),
             ({ inputCol, outputCol, commentsCol }) =>
               resize(inputCol, outputCol, commentsCol)(),
@@ -82,9 +83,9 @@ export const layoutMachine = createMachine({
           target: 'notationAndTextVisible',
           actions: [
             assign({
-              inputCol: 4,
-              outputCol: 12,
-              commentsCol: 0,
+              inputCol: SMALL_XL,
+              outputCol: LARGE_XL,
+              commentsCol: NONE,
             }),
             ({ inputCol, outputCol, commentsCol }) =>
               resize(inputCol, outputCol, commentsCol)(),
@@ -94,9 +95,9 @@ export const layoutMachine = createMachine({
           target: 'notationAndCommentsVisible',
           actions: [
             assign({
-              inputCol: 0,
-              outputCol: 8,
-              commentsCol: 4,
+              inputCol: NONE,
+              outputCol: MID_XL,
+              commentsCol: SMALL_XL,
             }),
             ({ inputCol, outputCol, commentsCol }) => {
               resize(inputCol, outputCol, commentsCol)();
@@ -108,9 +109,9 @@ export const layoutMachine = createMachine({
           target: 'notationAndCommentsVisible',
           actions: [
             assign({
-              inputCol: 0,
-              outputCol: 8,
-              commentsCol: 4,
+              inputCol: NONE,
+              outputCol: MID_XL,
+              commentsCol: SMALL_XL,
             }),
             ({ inputCol, outputCol, commentsCol }) => {
               resize(inputCol, outputCol, commentsCol)();
@@ -126,9 +127,9 @@ export const layoutMachine = createMachine({
           target: 'allVisible',
           actions: [
             assign({
-              inputCol: 2,
-              outputCol: 10,
-              commentsCol: 2,
+              inputCol: SMALL,
+              outputCol: LARGE,
+              commentsCol: SMALL,
             }),
             ({ inputCol, outputCol, commentsCol }) => {
               resize(inputCol, outputCol, commentsCol)();
@@ -140,9 +141,9 @@ export const layoutMachine = createMachine({
           target: 'notationVisible',
           actions: [
             assign({
-              inputCol: 0,
-              outputCol: 12,
-              commentsCol: 0,
+              inputCol: NONE,
+              outputCol: LARGE_XL,
+              commentsCol: NONE,
             }),
             ({ inputCol, outputCol, commentsCol }) =>
               resize(inputCol, outputCol, commentsCol)(),
@@ -152,9 +153,9 @@ export const layoutMachine = createMachine({
           target: 'notationAndCommentsVisible',
           actions: [
             assign({
-              inputCol: 0,
-              outputCol: 8,
-              commentsCol: 4,
+              inputCol: NONE,
+              outputCol: MID_XL,
+              commentsCol: SMALL_XL,
             }),
             ({ inputCol, outputCol, commentsCol }) => {
               resize(inputCol, outputCol, commentsCol)();
@@ -170,9 +171,9 @@ export const layoutMachine = createMachine({
           target: 'allVisible',
           actions: [
             assign({
-              inputCol: 2,
-              outputCol: 10,
-              commentsCol: 2,
+              inputCol: SMALL,
+              outputCol: LARGE,
+              commentsCol: SMALL,
             }),
             ({ inputCol, outputCol, commentsCol }) => {
               resize(inputCol, outputCol, commentsCol)();
@@ -184,9 +185,9 @@ export const layoutMachine = createMachine({
           target: 'notationVisible',
           actions: [
             assign({
-              inputCol: 0,
-              outputCol: 12,
-              commentsCol: 0,
+              inputCol: NONE,
+              outputCol: LARGE_XL,
+              commentsCol: NONE,
             }),
             ({ inputCol, outputCol, commentsCol }) => {
               resize(inputCol, outputCol, commentsCol)()
@@ -202,9 +203,9 @@ export const layoutMachine = createMachine({
           target: 'notationAndCommentsVisible',
           actions: [
             assign({
-              inputCol: 0,
-              outputCol: 8,
-              commentsCol: 4,
+              inputCol: NONE,
+              outputCol: MID_XL,
+              commentsCol: SMALL_XL,
             }),
             ({ inputCol, outputCol, commentsCol }) =>
               resize(inputCol, outputCol, commentsCol)(),
@@ -214,9 +215,9 @@ export const layoutMachine = createMachine({
           target: 'notationAndTextVisible',
           actions: [
             assign({
-              inputCol: 4,
-              outputCol: 12,
-              commentsCol: 0,
+              inputCol: SMALL_XL,
+              outputCol: LARGE_XL,
+              commentsCol: NONE,
             }),
             ({ inputCol, outputCol, commentsCol }) => {
               resize(inputCol, outputCol, commentsCol)()
@@ -228,9 +229,9 @@ export const layoutMachine = createMachine({
           target: 'notationVisible',
           actions: [
             assign({
-              inputCol: 0,
-              outputCol: 12,
-              commentsCol: 0,
+              inputCol: NONE,
+              outputCol: LARGE_XL,
+              commentsCol: NONE,
             }),
             ({ inputCol, outputCol, commentsCol }) =>
               resize(inputCol, outputCol, commentsCol)(),

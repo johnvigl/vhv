@@ -5,7 +5,7 @@ import { setupCollaboration } from './yjs-setup.js';
 /** @param {{FeatureKey: boolean }} FeatureConfig*/
 const FeatureConfig = {
   score: false,
-  collaboration: false,
+  collaboration: true,
   videoConference: false,
   waveSurfer: false,
 };
